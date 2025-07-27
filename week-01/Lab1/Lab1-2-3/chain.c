@@ -259,3 +259,4 @@ void delete_list(chain *chn)
     } while (temp != chn->head);
 	chn->head = NULL;
 }
+

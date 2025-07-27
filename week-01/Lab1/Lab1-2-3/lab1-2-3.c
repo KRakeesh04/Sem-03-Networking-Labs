@@ -1,5 +1,4 @@
 // general purpose standard C lib
-#define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdlib.h> // stdlib includes malloc() and free()
 #include <string.h>
@@ -28,6 +27,7 @@ matrix *get_input_initial_mat(int rows);
 matrix *copy_matrix(matrix *mat);
 int *parse_line_to_ints(const char *line, int *count);
 int *mat_elements(int expected_count);
+char *_strdup(const char *s) ;
 
 
 int main()
@@ -351,7 +351,7 @@ int *parse_line_to_ints(const char *line, int *count)
     int *arr = NULL;
     int n = 0;
 
-    char *copy = strdup(line);  // duplicate line so we can use strtok safely
+    char *copy = _strdup(line);  // duplicate line so we can use strtok safely
     if (!copy) { perror("strdup"); exit(1); }
 
     char *token = strtok(copy, " \t\n");
@@ -402,3 +402,10 @@ matrix *copy_matrix(matrix *mat)
     return new_mat;
 }
 
+char *_strdup(const char *s) 
+{
+    size_t len = strlen(s) + 1;
+    char *d = malloc(len);
+    if (d) memcpy(d, s, len);
+    return d;
+}

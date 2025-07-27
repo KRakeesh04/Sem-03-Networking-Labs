@@ -7,7 +7,6 @@
 #include "node.h"
 
 // macros
-
 #define INSERT_BEFORE 1
 #define INSERT_AFTER 2
 #define DELETE_NODE 3
@@ -103,10 +102,10 @@ void run(list *lst)
 //Print the list contents
 void print_list(list * lst)
 {
-   char *sentence;
-   sentence = list_to_sentence(lst);
-   printf("%s\n",sentence);
-   free(sentence);
+    char *sentence;
+    sentence = list_to_sentence(lst);
+    printf("%s\n",sentence);
+    free(sentence);
 }
 
 void initialize_linked_list(list * lst, char **arr, int count)  
