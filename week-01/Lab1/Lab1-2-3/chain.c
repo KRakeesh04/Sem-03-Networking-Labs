@@ -37,7 +37,7 @@ void add_row(matrix *mat, int *row)
     if (!tmp) { perror("realloc"); exit(1); }
     data = tmp;
 
-    data[row_count+1] = malloc(col_count*sizeof(int));
+    data[row_count] = malloc(col_count*sizeof(int));
     if (!data[row_count]) { perror("malloc"); exit(1); }
     for (int i = 0; i < col_count; i++)
     {
@@ -241,14 +241,7 @@ void delete_node(chain *chn, int index)
         temp->next->prev = temp->prev;
     }
 
-    int **data = temp->mat->data;
-    int rows = temp->mat->num_rows;
-    for (int i = 0; i < rows; i++)
-    {
-        free(data[i]);
-    }
-    free(data);
-    free(temp->mat);
+    delete_matrix(temp->mat);
     free(temp);
 }
 
@@ -260,14 +253,7 @@ void delete_list(chain *chn)
     node *next_node;
     do {
         next_node = temp->next;
-        int **data = temp->mat->data;
-        int rows = temp->mat->num_rows;
-        for (int i = 0; i < rows; i++)
-        {
-            free(data[i]);
-        }
-        free(data);
-        free(temp->mat);
+        delete_matrix(temp->mat);
         free(temp);
         temp = next_node;
     } while (temp != chn->head);
