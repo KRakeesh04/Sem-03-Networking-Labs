@@ -9,7 +9,6 @@
 // function prototypes
 void run(asignal * inputsignal);
 int powerOf(int num1, int num2);
-int *dSignal ;
 int duration;
 
 
@@ -17,14 +16,6 @@ int main()
 {
     asignal * inputsignal = (asignal *) malloc(sizeof(asignal));
     run(inputsignal);
-
-    for (int i = 0; i < duration+1; i++)
-    {
-        printf("%d", dSignal[i]);
-    }
-    printf("\n");
-    free(dSignal);
-
     free(inputsignal);
 	return 0;
 }
@@ -50,8 +41,20 @@ void run(asignal * inputsignal)
     quantizer(samples, pcmpulses, Qlevels, A);
 
     // encoding to digital signal
-    dSignal = malloc((duration+1)*sizeof(int));
+    int count = (duration+1)*encoderBits;
+    int *dSignal = malloc(count*sizeof(int));
     encoder(pcmpulses, dSignal, encoderBits);
+
+    // printing the digital signal
+    for (int i = 0; i < count; i++)
+    {
+        printf("%d", dSignal[i]);
+    }
+    printf("\n");
+
+    free(samples);
+    free(pcmpulses);
+    free(dSignal);
 }
 
 int powerOf(int num1, int num2)
